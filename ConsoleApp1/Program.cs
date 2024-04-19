@@ -11,6 +11,12 @@ class RenjuGame
 		{
 			string[] lines = File.ReadAllLines(inputFile);
 			int testCases = int.Parse(lines[0]);
+
+			if (CheckBoardSize(lines, testCases) != true)
+			{
+				Console.WriteLine("Wrong board size input");
+				return;
+			}
 			int currentIndex = 1;
 
 			for (int t = 0; t < testCases; t++)
@@ -83,6 +89,25 @@ class RenjuGame
 		}
 
 		return result;
+	}
+
+	static bool CheckBoardSize(string[] lines, int testCases)
+	{
+		if ((lines.Count() * testCases) % 20 != 0)
+		{
+			return false;
+		}
+
+		foreach(var line in lines)
+		{
+			if (line == lines[0] || line == string.Empty)
+				continue;
+
+			if(line.Split().Length != 19)
+                return false;			
+		}
+
+		return true;
 	}
 
 	private struct WinnerInfo
