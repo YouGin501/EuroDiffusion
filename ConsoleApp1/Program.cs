@@ -3,6 +3,8 @@ using System.IO;
 
 class RenjuGame
 {
+	private static int _boardSize = 19;
+
 	static void Main(string[] args)
 	{
 		string inputFile = "../../../input.txt";
@@ -21,12 +23,12 @@ class RenjuGame
 
 			for (int t = 0; t < testCases; t++)
 			{
-				int[,] board = new int[19, 19];
+				int[,] board = new int[_boardSize, _boardSize];
 
-				for (int i = 0; i < 19; i++)
+				for (int i = 0; i < _boardSize; i++)
 				{
 					string[] stoneValues = lines[currentIndex].Split();
-					for (int j = 0; j < 19; j++)
+					for (int j = 0; j < _boardSize; j++)
 					{
 						board[i, j] = int.Parse(stoneValues[j]);
 					}
@@ -58,9 +60,9 @@ class RenjuGame
 
 		var result = new WinnerInfo();
 
-		for (int i = 0; i < 19; i++)
+		for (int i = 0; i < _boardSize; i++)
 		{
-			for (int j = 0; j < 19; j++)
+			for (int j = 0; j < _boardSize; j++)
 			{
 				if (board[i, j] != 0)
 				{
@@ -70,7 +72,7 @@ class RenjuGame
 						int x = i + dx[d];
 						int y = j + dy[d];
 
-						while (x >= 0 && x < 19 && y >= 0 && y < 19 && board[x, y] == board[i, j])
+						while (x >= 0 && x < _boardSize && y >= 0 && y < _boardSize && board[x, y] == board[i, j])
 						{
 							count++;
 							x += dx[d];
@@ -103,7 +105,7 @@ class RenjuGame
 			if (line == lines[0] || line == string.Empty)
 				continue;
 
-			if(line.Split().Length != 19)
+			if(line.Split().Length != _boardSize)
                 return false;			
 		}
 
