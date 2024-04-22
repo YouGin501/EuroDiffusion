@@ -3,7 +3,7 @@ using System.IO;
 
 class RenjuGame
 {
-	private static int _boardSize = 19;
+	private const int _boardSize = 19;
 
 	static void Main(string[] args)
 	{
