@@ -4,6 +4,8 @@ using System.IO;
 class RenjuGame
 {
 	private const int _boardSize = 19;
+	private const int _directions = 4;
+	private const int _winCount = 5;
 
 	static void Main(string[] args)
 	{
@@ -64,27 +66,28 @@ class RenjuGame
 		{
 			for (int j = 0; j < _boardSize; j++)
 			{
-				if (board[i, j] != 0)
+				if (board[i, j] == 0)
 				{
-					for (int d = 0; d < 4; d++)
+					continue;
+				}
+				for (int d = 0; d < _directions; d++)
+				{
+					int count = 1;
+					int x = i + dx[d];
+					int y = j + dy[d];
+
+					while (x >= 0 && x < _boardSize && y >= 0 && y < _boardSize && board[x, y] == board[i, j])
 					{
-						int count = 1;
-						int x = i + dx[d];
-						int y = j + dy[d];
+						count++;
+						x += dx[d];
+						y += dy[d];
+					}
 
-						while (x >= 0 && x < _boardSize && y >= 0 && y < _boardSize && board[x, y] == board[i, j])
-						{
-							count++;
-							x += dx[d];
-							y += dy[d];
-						}
-
-						if (count == 5)
-						{
-							result.Winner = board[i, j];
-							result.X = i + 1;
-							result.Y = j + 1;
-						}
+					if (count == _winCount)
+					{
+						result.Winner = board[i, j];
+						result.X = i + 1;
+						result.Y = j + 1;
 					}
 				}
 			}
@@ -100,13 +103,25 @@ class RenjuGame
 			return false;
 		}
 
+		int emptyLinesCount = 0;
+
 		foreach(var line in lines)
 		{
 			if (line == lines[0] || line == string.Empty)
+			{
+				emptyLinesCount++;
 				continue;
+			}
 
-			if(line.Split().Length != _boardSize)
-                return false;			
+			if (line.Split().Length != _boardSize)
+			{
+				return false;
+			}
+		}
+
+		if(emptyLinesCount > testCases)
+		{
+			return false;
 		}
 
 		return true;
